@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Win-Win</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #121212;
+            color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            background-color: #f4f4f4;
+            color: #000000;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Largura relativa */
+            max-width: 400px; /* Largura máxima para telas maiores */
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .light-mode .container {
+            background-color: #fff;
+            color: #000000;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #ffffff;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            appearance: none; /* Remove as setinhas */
+        }
+
+        input:focus {
+            border-color: #28a745; /* Cor verde do botão */
+            outline: none; /* Remove o contorno padrão */
+        }
+
+        /* Remover setinhas no Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Remover setinhas no Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .light-mode input {
+            background-color: #fff;
+            color: #000000;
+            border-color: #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1c7a2e;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #155724;
+        }
+
+        .light-mode button {
+            background-color: #28a745;
+        }
+
+        .light-mode button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .light-mode .result {
+            color: #000000;
+        }
+
+        .toggle-dark-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .light-mode .toggle-dark-mode {
+            background-color: #333;
+        }
+
+        /* Media Queries para telas menores */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px; /* Reduz o tamanho do título */
+            }
+
+            input {
+                padding: 10px; /* Reduz o padding dos inputs */
+                font-size: 14px; /* Reduz o tamanho da fonte */
+            }
+
+            button {
+                padding: 10px; /* Reduz o padding do botão */
+                font-size: 14px; /* Reduz o tamanho da fonte */
+            }
+
+            .result {
+                font-size: 16px; /* Reduz o tamanho da fonte do resultado */
+            }
+
+            .container {
+                padding: 15px; /* Reduz o padding do container */
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <h1>Calculadora de Win-Win</h1>
+        <div class="input-group">
+            <input type="number" id="valorInicial" placeholder="Valor inicial (R$)">
+        </div>
+        <div class="input-group">
+            <input type="number" id="oddInicial" placeholder="ODD inicial">
+        </div>
+        <div class="input-group">
+            <input type="number" id="oddSegunda" placeholder="ODD do outro time">
+        </div>
+        <button onclick="calcularWinWin()">Calcular</button>
+        <div class="result" id="resultado"></div>
+    </div>
+
+    <button class="toggle-dark-mode" onclick="toggleDarkMode()">☀️ Light Mode</button>
+
+    <script>
+        function calcularWinWin() {
+            // Pegar os valores dos inputs
+            const valorInicial = parseFloat(document.getElementById('valorInicial').value);
+            const oddInicial = parseFloat(document.getElementById('oddInicial').value);
+            const oddSegunda = parseFloat(document.getElementById('oddSegunda').value);
+
+            // Calcular o valor a apostar no segundo time
+            const valorApostar = (valorInicial * oddInicial) / oddSegunda;
+
+            // Calcular o lucro garantido
+            const lucro = (valorInicial * oddInicial) - valorInicial - valorApostar;
+
+            // Exibir o resultado
+            const resultado = document.getElementById('resultado');
+            resultado.innerHTML = `
+                <p>Valor a apostar no segundo time: <strong>R$ ${valorApostar.toFixed(2)}</strong></p>
+                <p>Lucro garantido: <strong>R$ ${lucro.toFixed(2)}</strong></p>
+            `;
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+
+            const darkModeButton = document.querySelector('.toggle-dark-mode');
+            if (body.classList.contains('light-mode')) {
+                darkModeButton.textContent = '🌙 Dark Mode';
+            } else {
+                darkModeButton.textContent = '☀️ Light Mode';
+            }
+        }
+    </script>
+</body>
+</html>
