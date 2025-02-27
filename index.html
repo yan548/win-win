@@ -168,7 +168,7 @@
     <div class="container">
         <h1>Calculadora de Win-Win</h1>
         <div class="input-group">
-            <input type="number" id="valorInicial" placeholder="Valor inicial (R$)">
+            <input type="text" id="valorInicial" placeholder="Valor inicial (R$)" oninput="formatarMoeda(this)">
         </div>
         <div class="input-group">
             <input type="number" id="oddInicial" placeholder="ODD inicial">
@@ -183,11 +183,37 @@
     <button class="toggle-dark-mode" onclick="toggleDarkMode()">☀️ Light Mode</button>
 
     <script>
+        // Função para formatar o valor como moeda BRL
+        function formatarMoeda(input) {
+            // Remove tudo que não é número
+            let valor = input.value.replace(/\D/g, '');
+
+            // Formata como moeda BRL
+            valor = (Number(valor) / 100).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+
+            // Atualiza o valor no campo
+            input.value = valor;
+        }
+
+        // Função para remover a formatação de moeda e retornar um número
+        function removerFormatacaoMoeda(valorFormatado) {
+            return Number(valorFormatado.replace(/\D/g, '')) / 100;
+        }
+
         function calcularWinWin() {
             // Pegar os valores dos inputs
-            const valorInicial = parseFloat(document.getElementById('valorInicial').value);
+            const valorInicial = removerFormatacaoMoeda(document.getElementById('valorInicial').value);
             const oddInicial = parseFloat(document.getElementById('oddInicial').value);
             const oddSegunda = parseFloat(document.getElementById('oddSegunda').value);
+
+            // Verificar se os valores são válidos
+            if (isNaN(valorInicial) || isNaN(oddInicial) || isNaN(oddSegunda)) {
+                document.getElementById('resultado').innerHTML = "<p>Preencha todos os campos corretamente.</p>";
+                return;
+            }
 
             // Calcular o valor a apostar no segundo time
             const valorApostar = (valorInicial * oddInicial) / oddSegunda;
@@ -197,10 +223,14 @@
 
             // Exibir o resultado
             const resultado = document.getElementById('resultado');
-            resultado.innerHTML = `
-                <p>Valor a apostar no segundo time: <strong>R$ ${valorApostar.toFixed(2)}</strong></p>
-                <p>Lucro garantido: <strong>R$ ${lucro.toFixed(2)}</strong></p>
-            `;
+            if (lucro < 0) {
+                resultado.innerHTML = "<p>Não é possível fazer Win-Win com esses valores.</p>";
+            } else {
+                resultado.innerHTML = `
+                    <p>Valor a apostar no segundo time: <strong>${valorApostar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                    <p>Lucro garantido: <strong>${lucro.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                `;
+            }
         }
 
         function toggleDarkMode() {
