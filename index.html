@@ -34,7 +34,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 90%; /* Largura relativa */
-            max-width: 400px; /* Largura máxima para telas maiores */
+            max-width: 500px; /* Largura máxima para telas maiores */
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
         }
@@ -53,7 +53,7 @@
             margin-bottom: 15px;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #555;
@@ -65,7 +65,7 @@
             appearance: none; /* Remove as setinhas */
         }
 
-        input:focus {
+        input:focus, select:focus {
             border-color: #28a745; /* Cor verde do botão */
             outline: none; /* Remove o contorno padrão */
         }
@@ -82,7 +82,7 @@
             -moz-appearance: textfield;
         }
 
-        .light-mode input {
+        .light-mode input, .light-mode select {
             background-color: #fff;
             color: #000000;
             border-color: #ccc;
@@ -144,7 +144,7 @@
                 font-size: 20px; /* Reduz o tamanho do título */
             }
 
-            input {
+            input, select {
                 padding: 10px; /* Reduz o padding dos inputs */
                 font-size: 14px; /* Reduz o tamanho da fonte */
             }
@@ -167,15 +167,27 @@
 <body class="dark-mode">
     <div class="container">
         <h1>Calculadora de Win-Win</h1>
+        
+        <!-- Seletor de número de entradas -->
         <div class="input-group">
-            <input type="text" id="valorInicial" placeholder="Valor inicial (R$)" oninput="formatarMoeda(this)">
+            <label for="numEntradas">Número de entradas:</label>
+            <select id="numEntradas" onchange="criarCampos()">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
         </div>
+
+        <!-- Campos dinâmicos para entradas -->
+        <div id="camposEntradas"></div>
+
+        <!-- ODD do Time B -->
         <div class="input-group">
-            <input type="number" id="oddInicial" placeholder="ODD inicial">
+            <label for="oddTimeB">ODD do outro time (Time B):</label>
+            <input type="number" id="oddTimeB" placeholder="ODD do outro time">
         </div>
-        <div class="input-group">
-            <input type="number" id="oddSegunda" placeholder="ODD do outro time">
-        </div>
+
         <button onclick="calcularWinWin()">Calcular</button>
         <div class="result" id="resultado"></div>
     </div>
@@ -183,6 +195,26 @@
     <button class="toggle-dark-mode" onclick="toggleDarkMode()">☀️ Light Mode</button>
 
     <script>
+        // Função para criar campos dinamicamente
+        function criarCampos() {
+            const numEntradas = document.getElementById('numEntradas').value;
+            const camposEntradas = document.getElementById('camposEntradas');
+            camposEntradas.innerHTML = ''; // Limpa os campos anteriores
+
+            for (let i = 1; i <= numEntradas; i++) {
+                camposEntradas.innerHTML += `
+                    <div class="input-group">
+                        <label for="valor${i}">Valor da entrada ${i} (R$):</label>
+                        <input type="text" id="valor${i}" placeholder="Valor inicial (R$)" oninput="formatarMoeda(this)">
+                    </div>
+                    <div class="input-group">
+                        <label for="odd${i}">ODD da entrada ${i}:</label>
+                        <input type="number" id="odd${i}" placeholder="ODD">
+                    </div>
+                `;
+            }
+        }
+
         // Função para formatar o valor como moeda BRL
         function formatarMoeda(input) {
             // Remove tudo que não é número
@@ -203,23 +235,45 @@
             return Number(valorFormatado.replace(/\D/g, '')) / 100;
         }
 
+        // Função para calcular o Win-Win
         function calcularWinWin() {
-            // Pegar os valores dos inputs
-            const valorInicial = removerFormatacaoMoeda(document.getElementById('valorInicial').value);
-            const oddInicial = parseFloat(document.getElementById('oddInicial').value);
-            const oddSegunda = parseFloat(document.getElementById('oddSegunda').value);
+            const numEntradas = document.getElementById('numEntradas').value;
+            let valores = [];
+            let odds = [];
 
-            // Verificar se os valores são válidos
-            if (isNaN(valorInicial) || isNaN(oddInicial) || isNaN(oddSegunda)) {
-                document.getElementById('resultado').innerHTML = "<p>Preencha todos os campos corretamente.</p>";
+            // Coletar valores e odds das entradas
+            for (let i = 1; i <= numEntradas; i++) {
+                const valor = removerFormatacaoMoeda(document.getElementById(`valor${i}`).value);
+                const odd = parseFloat(document.getElementById(`odd${i}`).value);
+
+                if (isNaN(valor) || isNaN(odd)) {
+                    document.getElementById('resultado').innerHTML = "<p>Preencha todos os campos corretamente.</p>";
+                    return;
+                }
+
+                valores.push(valor);
+                odds.push(odd);
+            }
+
+            // Coletar ODD do Time B
+            const oddTimeB = parseFloat(document.getElementById('oddTimeB').value);
+
+            if (isNaN(oddTimeB)) {
+                document.getElementById('resultado').innerHTML = "<p>Preencha a ODD do outro time.</p>";
                 return;
             }
 
-            // Calcular o valor a apostar no segundo time
-            const valorApostar = (valorInicial * oddInicial) / oddSegunda;
+            // Calcular o valor total apostado no Time A
+            const valorTotalTimeA = valores.reduce((acc, val) => acc + val, 0);
+
+            // Calcular o retorno total esperado no Time A
+            const retornoTimeA = valores.reduce((acc, val, index) => acc + val * odds[index], 0);
+
+            // Calcular o valor a apostar no Time B para garantir o lucro
+            const valorApostarTimeB = retornoTimeA / oddTimeB;
 
             // Calcular o lucro garantido
-            const lucro = (valorInicial * oddInicial) - valorInicial - valorApostar;
+            const lucro = retornoTimeA - valorTotalTimeA - valorApostarTimeB;
 
             // Exibir o resultado
             const resultado = document.getElementById('resultado');
@@ -227,12 +281,15 @@
                 resultado.innerHTML = "<p>Não é possível fazer Win-Win com esses valores.</p>";
             } else {
                 resultado.innerHTML = `
-                    <p>Valor a apostar no segundo time: <strong>${valorApostar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                    <p>Valor total apostado no Time A: <strong>${valorTotalTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                    <p>Retorno esperado no Time A: <strong>${retornoTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                    <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
                     <p>Lucro garantido: <strong>${lucro.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
                 `;
             }
         }
 
+        // Função para alternar o Dark Mode
         function toggleDarkMode() {
             const body = document.body;
             body.classList.toggle('dark-mode');
@@ -245,6 +302,9 @@
                 darkModeButton.textContent = '☀️ Light Mode';
             }
         }
+
+        // Inicializar campos ao carregar a página
+        criarCampos();
     </script>
 </body>
 </html>
