@@ -122,6 +122,7 @@
             color: #000000;
         }
 
+        /* Estilo do botão de alternância (toggle) */
         .toggle-dark-mode {
             position: fixed;
             top: 20px;
@@ -130,12 +131,26 @@
             color: #fff;
             border: none;
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 20px; /* Deixa o botão redondo */
             cursor: pointer;
+            width: 40px; /* Tamanho menor */
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-dark-mode:hover {
+            background-color: #666;
         }
 
         .light-mode .toggle-dark-mode {
             background-color: #333;
+        }
+
+        .light-mode .toggle-dark-mode:hover {
+            background-color: #444;
         }
 
         /* Media Queries para telas menores */
@@ -193,7 +208,8 @@
         <div class="result" id="resultado"></div>
     </div>
 
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">☀️ Light Mode</button>
+    <!-- Botão de alternância (toggle) -->
+    <button class="toggle-dark-mode" onclick="toggleDarkMode()">🌙</button>
 
     <script>
         // Função para criar campos dinamicamente
@@ -298,9 +314,9 @@
 
             const darkModeButton = document.querySelector('.toggle-dark-mode');
             if (body.classList.contains('light-mode')) {
-                darkModeButton.textContent = '🌙 Dark Mode';
+                darkModeButton.textContent = '🌙'; // Ícone de lua para Light Mode
             } else {
-                darkModeButton.textContent = '☀️ Light Mode';
+                darkModeButton.textContent = '☀️'; // Ícone de sol para Dark Mode
             }
         }
 
