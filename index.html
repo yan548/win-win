@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,78 +30,104 @@
 
         .container {
             background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%; /* Largura relativa */
-            max-width: 500px; /* Largura máxima para telas maiores */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .light-mode .container {
-            background-color: #fff;
+            background-color: #ffffff;
             color: #000000;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 20px;
+            font-weight: 600;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 img {
+            width: 30px;
+            height: 30px;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        .light-mode .input-group label {
+            color: #666666;
         }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #555;
-            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 6px;
             background-color: #333;
             color: #ffffff;
-            font-size: 16px;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-            appearance: none; /* Remove as setinhas */
+            font-size: 14px;
+            transition: border-color 0.3s, background-color 0.3s;
         }
 
         input:focus, select:focus {
-            border-color: #28a745; /* Cor verde do botão */
-            outline: none; /* Remove o contorno padrão */
+            border-color: #28a745;
+            outline: none;
         }
 
-        /* Remover setinhas no Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
+        .light-mode input, .light-mode select {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #cccccc;
+        }
+
+        /* Remover setinhas no input number */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        /* Remover setinhas no Firefox */
         input[type="number"] {
             -moz-appearance: textfield;
-        }
-
-        .light-mode input, .light-mode select {
-            background-color: #fff;
-            color: #000000;
-            border-color: #ccc;
         }
 
         button {
             width: 100%;
             padding: 12px;
-            background-color: #1c7a2e;
-            color: #fff;
+            background-color: #28a745;
+            color: #ffffff;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: 500;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         button:hover {
-            background-color: #155724;
+            background-color: #218838;
         }
 
         .light-mode button {
@@ -114,26 +140,32 @@
 
         .result {
             margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 500;
+            color: #28a745;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 6px;
+            text-align: left;
         }
 
         .light-mode .result {
-            color: #000000;
+            color: #218838;
+            background-color: #f0f0f0;
         }
 
-        /* Estilo do botão de alternância (toggle) */
+        /* Botão de alternância (toggle) */
         .toggle-dark-mode {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: #555;
-            color: #fff;
+            background-color: #444;
+            color: #ffffff;
             border: none;
             padding: 10px;
-            border-radius: 20px; /* Deixa o botão redondo */
+            border-radius: 50%;
             cursor: pointer;
-            width: 40px; /* Tamanho menor */
+            width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
@@ -142,47 +174,120 @@
         }
 
         .toggle-dark-mode:hover {
-            background-color: #666;
+            background-color: #555;
         }
 
         .light-mode .toggle-dark-mode {
-            background-color: #333;
+            background-color: #cccccc;
+            color: #000000;
         }
 
         .light-mode .toggle-dark-mode:hover {
-            background-color: #444;
+            background-color: #bbbbbb;
+        }
+
+        /* Checkbox personalizado */
+        .input-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        /* Botões menores e mais compactos */
+        .compact-button {
+            padding: 8px 12px;
+            font-size: 13px;
+            width: auto;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        /* Instruções ou dicas */
+        .dicas {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #cccccc;
+            text-align: left;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 6px;
+        }
+
+        .light-mode .dicas {
+            color: #666666;
+            background-color: #f0f0f0;
+        }
+
+        .dicas h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #28a745;
+        }
+
+        .dicas ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .dicas li {
+            margin-bottom: 8px;
         }
 
         /* Media Queries para telas menores */
         @media (max-width: 480px) {
             h1 {
-                font-size: 20px; /* Reduz o tamanho do título */
+                font-size: 22px;
             }
 
             input, select {
-                padding: 10px; /* Reduz o padding dos inputs */
-                font-size: 14px; /* Reduz o tamanho da fonte */
+                padding: 8px;
+                font-size: 13px;
             }
 
             button {
-                padding: 10px; /* Reduz o padding do botão */
-                font-size: 14px; /* Reduz o tamanho da fonte */
+                padding: 10px;
+                font-size: 13px;
             }
 
             .result {
-                font-size: 16px; /* Reduz o tamanho da fonte do resultado */
+                font-size: 14px;
             }
 
             .container {
-                padding: 15px; /* Reduz o padding do container */
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body class="dark-mode">
     <div class="container">
-        <h1>Calculadora de Win-Win</h1>
+        <h1>
+            <img src="https://img.icons8.com/ios-filled/50/28a745/calculator.png" alt="Ícone de calculadora">
+            Calculadora de Win-Win
+        </h1>
         
+        <!-- Seção de Unidade (aparece apenas no modo unidades) -->
+        <div class="input-group" id="grupoUnidade" style="display: none;">
+            <label for="unidade">Valor da unidade (R$):</label>
+            <input type="text" id="unidade" placeholder="Ex: 100,00" onblur="formatarUnidade(this)">
+        </div>
+
+        <!-- Seletor de modo de cálculo -->
+        <div class="input-group">
+            <label for="modoCalculo">Calcular em:</label>
+            <select id="modoCalculo" onchange="atualizarInterface()">
+                <option value="real">Reais</option>
+                <option value="unidade">Unidades</option>
+            </select>
+        </div>
+
+        <!-- Checkbox para ativar o modo Free Bet -->
+        <div class="input-group">
+            <label>
+                <input type="checkbox" id="modoFreeBet" onchange="alternarModoFreeBet()">
+                Ativar modo Free Bet
+            </label>
+        </div>
+
         <!-- Seletor de número de entradas -->
         <div class="input-group">
             <label for="numEntradas">Número de entradas:</label>
@@ -198,14 +303,39 @@
         <!-- Campos dinâmicos para entradas -->
         <div id="camposEntradas"></div>
 
-        <!-- ODD do Time B -->
-        <div class="input-group">
+        <!-- ODD do Time B (apenas para Win-Win) -->
+        <div class="input-group" id="grupoOddTimeB">
             <label for="oddTimeB">ODD do outro time (Time B):</label>
-            <input type="number" id="oddTimeB" placeholder="ODD do outro time">
+            <input type="number" id="oddTimeB" placeholder="Ex: 2.50">
         </div>
 
-        <button onclick="calcularWinWin()">Calcular</button>
+        <!-- Botão de Free Bet (inicialmente escondido) -->
+        <div class="input-group" id="grupoFreeBet" style="display: none;">
+            <button class="compact-button" onclick="calcularFreeBet()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/free-shipping.png" alt="Ícone de Free Bet" width="20">
+                Calcular Free Bet
+            </button>
+        </div>
+
+        <!-- Botão de Win-Win (inicialmente visível) -->
+        <button class="compact-button" id="botaoWinWin" onclick="calcularWinWin()">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/win.png" alt="Ícone de Win-Win" width="20">
+            Calcular Win-Win
+        </button>
+
+        <!-- Resultado -->
         <div class="result" id="resultado"></div>
+
+        <!-- Instruções ou dicas -->
+        <div class="dicas">
+            <h3>Como usar a calculadora:</h3>
+            <ul>
+                <li>Selecione o modo de cálculo (Reais ou Unidades).</li>
+                <li>Escolha o número de entradas e preencha os valores e odds.</li>
+                <li>No modo Free Bet, a calculadora mostrará a ODD necessária para sair da bet.</li>
+                <li>No modo Win-Win, a calculadora mostrará o lucro garantido.</li>
+            </ul>
+        </div>
     </div>
 
     <!-- Botão de alternância (toggle) -->
@@ -221,24 +351,66 @@
             for (let i = 1; i <= numEntradas; i++) {
                 camposEntradas.innerHTML += `
                     <div class="input-group">
-                        <label for="valor${i}">Valor da entrada ${i} (R$):</label>
-                        <input type="text" id="valor${i}" placeholder="Valor inicial (R$)" oninput="formatarMoeda(this)">
+                        <label for="valor${i}" id="labelValor${i}">Valor da entrada ${i} (R$):</label>
+                        <input type="text" id="valor${i}" placeholder="Ex: 50,00" onblur="formatarValor(this)">
                     </div>
                     <div class="input-group">
                         <label for="odd${i}">ODD da entrada ${i}:</label>
-                        <input type="number" id="odd${i}" placeholder="ODD">
+                        <input type="number" id="odd${i}" placeholder="Ex: 1.80">
                     </div>
                 `;
             }
+            atualizarDescricaoCampos(); // Atualiza as descrições dos campos
         }
 
-        // Função para formatar o valor como moeda BRL
-        function formatarMoeda(input) {
-            // Remove tudo que não é número
-            let valor = input.value.replace(/\D/g, '');
+        // Função para alternar o modo Free Bet
+        function alternarModoFreeBet() {
+            const modoFreeBetAtivo = document.getElementById('modoFreeBet').checked;
+            const grupoFreeBet = document.getElementById('grupoFreeBet');
+            const botaoWinWin = document.getElementById('botaoWinWin');
+            const grupoOddTimeB = document.getElementById('grupoOddTimeB');
 
-            // Formata como moeda BRL
-            valor = (Number(valor) / 100).toLocaleString('pt-BR', {
+            if (modoFreeBetAtivo) {
+                grupoFreeBet.style.display = 'block';
+                botaoWinWin.style.display = 'none';
+                grupoOddTimeB.style.display = 'none';
+            } else {
+                grupoFreeBet.style.display = 'none';
+                botaoWinWin.style.display = 'inline-block';
+                grupoOddTimeB.style.display = 'block';
+            }
+        }
+
+        // Função para atualizar a interface conforme o modo selecionado
+        function atualizarInterface() {
+            const modoCalculo = document.getElementById('modoCalculo').value;
+            const grupoUnidade = document.getElementById('grupoUnidade');
+
+            if (modoCalculo === 'unidade') {
+                grupoUnidade.style.display = 'block';
+            } else {
+                grupoUnidade.style.display = 'none';
+            }
+
+            atualizarDescricaoCampos();
+        }
+
+        // Função para formatar o valor da unidade como moeda BRL
+        function formatarUnidade(input) {
+            // Remove tudo que não é número ou vírgula
+            let valor = input.value.replace(/[^0-9,]/g, '');
+
+            // Se o valor estiver vazio, permite apagar
+            if (valor === '') {
+                input.value = '';
+                return;
+            }
+
+            // Substitui vírgula por ponto para cálculo
+            let valorNumerico = valor.replace(',', '.');
+
+            // Formata como moeda BRL com vírgula como separador decimal
+            valor = (Number(valorNumerico)).toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
             });
@@ -247,9 +419,24 @@
             input.value = valor;
         }
 
+        // Função para formatar os valores das entradas
+        function formatarValor(input) {
+            const modoCalculo = document.getElementById('modoCalculo').value;
+            if (modoCalculo === 'real') {
+                let valor = input.value.replace(/[^0-9,]/g, '');
+                valor = valor.replace(',', '.'); // Converte vírgula para ponto
+                input.value = (Number(valor)).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+            } else {
+                input.value = input.value.replace(/[^0-9.]/g, '');
+            }
+        }
+
         // Função para remover a formatação de moeda e retornar um número
         function removerFormatacaoMoeda(valorFormatado) {
-            return Number(valorFormatado.replace(/\D/g, '')) / 100;
+            return Number(valorFormatado.replace(/[^0-9.,]/g, '').replace(',', '.'));
         }
 
         // Função para calcular o Win-Win
@@ -258,13 +445,12 @@
             let valores = [];
             let odds = [];
 
-            // Coletar valores e odds das entradas
             for (let i = 1; i <= numEntradas; i++) {
                 const valor = removerFormatacaoMoeda(document.getElementById(`valor${i}`).value);
                 const odd = parseFloat(document.getElementById(`odd${i}`).value);
 
                 if (isNaN(valor) || isNaN(odd)) {
-                    document.getElementById('resultado').innerHTML = "<p>Preencha todos os campos corretamente.</p>";
+                    document.getElementById('resultado').innerHTML = "<p style='color: red;'>Preencha todos os campos corretamente.</p>";
                     return;
                 }
 
@@ -272,38 +458,70 @@
                 odds.push(odd);
             }
 
-            // Coletar ODD do Time B
             const oddTimeB = parseFloat(document.getElementById('oddTimeB').value);
 
             if (isNaN(oddTimeB)) {
-                document.getElementById('resultado').innerHTML = "<p>Preencha a ODD do outro time.</p>";
+                document.getElementById('resultado').innerHTML = "<p style='color: red;'>Preencha a ODD do outro time.</p>";
                 return;
             }
 
-            // Calcular o valor total apostado no Time A
             const valorTotalTimeA = valores.reduce((acc, val) => acc + val, 0);
-
-            // Calcular o retorno total esperado no Time A
             const retornoTimeA = valores.reduce((acc, val, index) => acc + val * odds[index], 0);
-
-            // Calcular o valor a apostar no Time B para garantir o lucro
             const valorApostarTimeB = retornoTimeA / oddTimeB;
-
-            // Calcular o lucro garantido
             const lucro = retornoTimeA - valorTotalTimeA - valorApostarTimeB;
 
-            // Exibir o resultado
             const resultado = document.getElementById('resultado');
             if (lucro < 0) {
                 resultado.innerHTML = "<p>Não é possível fazer Win-Win com esses valores.</p>";
             } else {
-                resultado.innerHTML = `
-                    <p>Valor total apostado no Time A: <strong>${valorTotalTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-                    <p>Retorno esperado no Time A: <strong>${retornoTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-                    <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-                    <p>Lucro garantido: <strong>${lucro.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-                `;
+                const modoCalculo = document.getElementById('modoCalculo').value;
+                if (modoCalculo === 'unidade') {
+                    resultado.innerHTML = `
+                        <p>Valor total apostado no Time A: <strong>${valorTotalTimeA.toFixed(2)} unidades</strong></p>
+                        <p>Retorno esperado no Time A: <strong>${retornoTimeA.toFixed(2)} unidades</strong></p>
+                        <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toFixed(2)} unidades</strong></p>
+                        <p>Lucro garantido: <strong>${lucro.toFixed(2)} unidades</strong></p>
+                    `;
+                } else {
+                    resultado.innerHTML = `
+                        <p>Valor total apostado no Time A: <strong>${valorTotalTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                        <p>Retorno esperado no Time A: <strong>${retornoTimeA.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                        <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                        <p>Lucro garantido: <strong>${lucro.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                    `;
+                }
             }
+        }
+
+        // Função para calcular o Free Bet
+        function calcularFreeBet() {
+            const numEntradas = document.getElementById('numEntradas').value;
+            let valores = [];
+            let odds = [];
+
+            for (let i = 1; i <= numEntradas; i++) {
+                const valor = removerFormatacaoMoeda(document.getElementById(`valor${i}`).value);
+                const odd = parseFloat(document.getElementById(`odd${i}`).value);
+
+                if (isNaN(valor) || isNaN(odd)) {
+                    document.getElementById('resultado').innerHTML = "<p style='color: red;'>Preencha todos os campos corretamente.</p>";
+                    return;
+                }
+
+                valores.push(valor);
+                odds.push(odd);
+            }
+
+            const valorTotalTimeA = valores.reduce((acc, val) => acc + val, 0);
+            const retornoTimeA = valores.reduce((acc, val, index) => acc + val * odds[index], 0);
+
+            // Cálculo da ODD necessária para o Free Bet
+            const oddNecessaria = retornoTimeA / valorTotalTimeA;
+
+            const resultado = document.getElementById('resultado');
+            resultado.innerHTML = `
+                <p>ODD necessária para Free Bet: <strong>${oddNecessaria.toFixed(2)}</strong></p>
+            `;
         }
 
         // Função para alternar o Dark Mode
@@ -314,14 +532,15 @@
 
             const darkModeButton = document.querySelector('.toggle-dark-mode');
             if (body.classList.contains('light-mode')) {
-                darkModeButton.textContent = '🌙'; // Ícone de lua para Light Mode
+                darkModeButton.textContent = '🌙';
             } else {
-                darkModeButton.textContent = '☀️'; // Ícone de sol para Dark Mode
+                darkModeButton.textContent = '☀️';
             }
         }
 
         // Inicializar campos ao carregar a página
         criarCampos();
+        atualizarInterface(); // Chama a função ao carregar a página
     </script>
 </body>
 </html>
