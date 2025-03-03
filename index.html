@@ -522,10 +522,19 @@
             const valorApostarTimeB = valorTotalTimeA / oddNecessaria;
 
             const resultado = document.getElementById('resultado');
-            resultado.innerHTML = `
-                <p>ODD necessária para sair no zero: <strong>${oddNecessaria.toFixed(2)}</strong></p>
-                <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-            `;
+            const modoCalculo = document.getElementById('modoCalculo').value;
+
+            if (modoCalculo === 'unidade') {
+                resultado.innerHTML = `
+                    <p>ODD necessária para sair no zero: <strong>${oddNecessaria.toFixed(2)}</strong></p>
+                    <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toFixed(2)} unidades</strong></p>
+                `;
+            } else {
+                resultado.innerHTML = `
+                    <p>ODD necessária para sair no zero: <strong>${oddNecessaria.toFixed(2)}</strong></p>
+                    <p>Valor a apostar no Time B: <strong>${valorApostarTimeB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
+                `;
+            }
         }
 
         // Função para alternar o Dark Mode
