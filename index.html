@@ -395,6 +395,19 @@
             atualizarDescricaoCampos();
         }
 
+        // Função para atualizar a descrição dos campos de valor
+        function atualizarDescricaoCampos() {
+            const modoCalculo = document.getElementById('modoCalculo').value;
+            const numEntradas = document.getElementById('numEntradas').value;
+
+            for (let i = 1; i <= numEntradas; i++) {
+                const label = document.getElementById(`labelValor${i}`);
+                if (label) {
+                    label.textContent = `Valor da entrada ${i} (${modoCalculo === 'unidade' ? 'U' : 'R$'}):`;
+                }
+            }
+        }
+
         // Função para formatar o valor da unidade como moeda BRL
         function formatarUnidade(input) {
             // Remove tudo que não é número ou vírgula
